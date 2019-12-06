@@ -1,3 +1,13 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+generate:
+  path: /generate
+  controller: App\Controller\RandomController::showGenerate
+
+retrieve:
+  path: /retrieve/{id}
+  controller: App\Controller\RandomController::showRetrieve
+  requirements:
+        page: '\d+'
