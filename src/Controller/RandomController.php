@@ -11,8 +11,7 @@ class RandomController extends AbstractController
     /**
      * @Route("/random", name="random")
      */
-    public function index()
-    {
+    public function index() {
         return $this->json([
             'message' => 'Welcome to your new controller!',
             'path' => 'src/Controller/RandomController.php',
@@ -22,8 +21,7 @@ class RandomController extends AbstractController
     /**
      * @Route("/generate", name="generate")
      */
-    public function showGenerate()
-    {
+    public function showGenerate() {
         $entityManager = $this->getDoctrine()->getManager();
 
         $randomInt = random_int(-2147483648, 2147483647);
@@ -34,10 +32,7 @@ class RandomController extends AbstractController
         $entityManager->persist($random);
         $entityManager->flush();
 
-        return $this->json([
-            'id' => $random->getId(),
-            'number' => $randomInt
-        ]);
+        return $this->getRandomResponse($random->getId(), $randomInt);
     }
 
     /**
@@ -54,9 +49,13 @@ class RandomController extends AbstractController
             ]);
         }
 
+        return $this->getRandomResponse($id, $random->getNumber());
+    }
+
+    private function getRandomResponse($id, $number) {
         return $this->json([
             'id' => $id,
-            'number' => $random->getNumber()
+            'number' => $number
         ]);
     }
 }
